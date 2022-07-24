@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import { instance } from "../Api";
 import RefresherContext from "../context/refresh/ReresherContext";
+import qs from "qs";
 const InvoiceControlContext = createContext({});
 
 export const InvoiceControlProvider = ({ children }) => {
@@ -12,14 +13,15 @@ export const InvoiceControlProvider = ({ children }) => {
   //comsuming provided value
   const { refresh, setRefresh } = useContext(RefresherContext);
 
-  const func_addInvoice = (invoice) => {
-    instance.post(`/invoice/`)
-    .then((res) => {
-      setRefresh(refresh + 1);
-      return res.data.results.data;
-    })
-    .catch((err) => console.log(err));
-  }
+  const func_addInvoice = (data) => {
+    instance
+      .post(`/invoice`, qs.stringify({ data }))
+      .then((res) => {
+        setRefresh(refresh + 1);
+        return res.data.results.data;
+      })
+      .catch((err) => console.log(err));
+  };
 
   //deleteInvoice
   const func_deleteInvoice = (invoice) => {
@@ -37,6 +39,7 @@ export const InvoiceControlProvider = ({ children }) => {
     <InvoiceControlContext.Provider
       value={{
         func_deleteInvoice,
+        func_addInvoice,
       }}
     >
       {children}

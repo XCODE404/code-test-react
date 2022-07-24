@@ -24,6 +24,8 @@ import {
   CenterDiv,
   Widget,
   Title,
+  ErrorLabel,
+  FormArea,
 } from "./Invoice.style";
 import { useForm } from "react-hook-form";
 import InvoiceContext from "../../context/invoice/InvoiceContext";
@@ -32,6 +34,7 @@ import { useInvoice } from "../../control/InvoiceControl";
 function Invoice() {
   //comsuming provided values
   const { invoices } = useContext(InvoiceContext);
+  console.log(invoices);
   const invoiceController = useInvoice();
 
   const {
@@ -71,17 +74,14 @@ function Invoice() {
 
   //create new invoice
   const onSubmit = (data) => {
-    console.log(data);
+    invoiceController.func_addInvoice(data);
+    setIsAdd(false);
   };
 
   //delete invoice
   const func_delete = () => {
     invoiceController.func_deleteInvoice(selectedData);
     setIsDelete(false);
-  };
-
-  const func_add = () => {
-    invoiceController.func_addInvoice();
   };
 
   const onUpdateSubmit = (data) => {
@@ -135,21 +135,45 @@ function Invoice() {
             <div>
               <FormTitle>Add Invoice </FormTitle>
               <InvoiceForm onSubmit={handleSubmit(onSubmit)}>
-                <FormInput {...register("salePerson", { required: true })} />
+                <FormInput
+                  type="text"
+                  {...register("customer_name", { required: true })}
+                  placeholder="Customer Name"
+                />
                 {/* errors will return when field validation fails  */}
-                {errors.salePerson && <span>This field is required</span>}
-                <FormInput {...register("date", { required: true })} />
+                {errors.customer_name && (
+                  <ErrorLabel>Customer Name is required!</ErrorLabel>
+                )}
+                <FormInput
+                  type="text"
+                  {...register("sales_person_name", { required: true })}
+                  placeholder="Sale Person Name"
+                />
+                {/* errors will return when field validation fails  */}
+                {errors.sales_person_name && (
+                  <ErrorLabel>Sale Person Name is required!</ErrorLabel>
+                )}
                 <FormInput
                   type="date"
                   {...register("date", { required: true })}
+                  placeholder="Date"
                 />
+                {/* errors will return when field validation fails  */}
+                {errors.date && <ErrorLabel>Date is required!</ErrorLabel>}
+
+                <FormArea
+                  name=""
+                  id=""
+                  cols="30"
+                  rows="20"
+                  {...register("notes", { required: true })}
+                  placeholder="Notes..."
+                ></FormArea>
+                {/* errors will return when field validation fails  */}
+                {errors.notes && <ErrorLabel>note is required!</ErrorLabel>}
 
                 <LeftDiv>
-                  <FormButton
-                    type="submit"
-                    value="Create Account"
-                    onClick={() => setIsAdd(false)}
-                  />
+                  <FormButton type="submit" value="Create Account" />
                 </LeftDiv>
               </InvoiceForm>
             </div>

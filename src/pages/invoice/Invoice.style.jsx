@@ -30,6 +30,10 @@ export const CenterDiv = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const ErrorLabel = styled.div`
+  color: red;
+  font-weight: 500;
+`;
 export const AddButton = styled.button`
   padding: 10px 20px;
   border: none;
@@ -42,7 +46,7 @@ export const List = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 10px;
   margin-top: 20px;
   background-color: #f9f9f9;
@@ -194,7 +198,6 @@ export const DeleteModal = styled.div`
 `;
 export const InvoiceForm = styled.form`
   width: 100%;
-
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -214,8 +217,15 @@ export const FormInput = styled.input`
   height: 40px;
   padding: 10px;
   border-radius: 2px;
-
-  margin: 5px 0;
+  margin: 10px 0;
+`;
+export const FormArea = styled.textarea`
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 2px;
+  margin: 10px 0;
 `;
 export const FormButton = styled.input`
   margin: 0 10px;

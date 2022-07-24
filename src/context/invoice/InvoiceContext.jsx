@@ -13,7 +13,7 @@ export const InvoicesProvider = ({ children }) => {
 
   useEffect(() => {
     instance
-      .get("/invoice")
+      .get("/invoice?page=1")
       .then((response) => setInvoices(response.data.results.data));
   }, [refresh]);
   return (
