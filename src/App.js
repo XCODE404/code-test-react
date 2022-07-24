@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Invoice from "./pages/invoice/Invoice";
+import Layout from "./components/layout/Layout";
+import { InvoicesProvider } from "./context/invoice/InvoiceContext";
+import { InvoiceControlProvider } from "./control/InvoiceControl";
+import { RefresherProvider } from "./context/refresh/ReresherContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RefresherProvider>
+      <InvoicesProvider>
+        <InvoiceControlProvider>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Invoice />}></Route>
+            </Routes>
+          </Layout>
+        </InvoiceControlProvider>
+      </InvoicesProvider>
+    </RefresherProvider>
   );
 }
 
